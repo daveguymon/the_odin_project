@@ -1,17 +1,25 @@
-def ceaser_cipher(string, num)
-  ascii = string.downcase.chars.map(&:ord)
+def ceaser_cipher(str, shift)
+  ascii_array = str.chars.map(&:ord)
 
-  shifted = ascii.map{ |c|
-    if c > 47
-      then ((c + num) < 123 ? (c + num) : (c + num) - 26)
+  new_ascii_values = ascii_array.map do |val|
+    if (65..90).include?(val)
+      if val + shift > 90
+        val + shift - 26
+      else
+        val + shift
+      end
+    elsif (97..122).include?(val)
+      if val + shift > 122
+        val + shift - 26
+      else
+        val + shift
+      end
     else
-      c
+      val = val
     end
-  }
+  end
 
-  new_string = shifted.map { |c| c.chr }.join
-
-  puts new_string
+  new_chars_array = new_ascii_values.map(&:chr).join
 end
 
 ceaser_cipher("What a string!", 5)
